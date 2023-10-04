@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Center-align the container */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Make the container fill the viewport height */
+        }
+
+        /* Add CSS styles for the result box */
+        #result-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Temperature Converter</title>
+</head>
+<body>
+    <!-- Center-aligning container -->
+    <div class="center-container">
+        <div class="converter">
+            <h1>Temperature Converter</h1>
+            <input type="number" id="temperature" placeholder="Enter temperature" required>
+            <select id="unit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+            <button onclick="convertTemperature()">Convert</button>
+            <!-- Result displayed inside the result-box div -->
+            <div id="result-box"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function convertTemperature() {
+            // Get the temperature value and selected unit
+            const temperatureInput = document.getElementById("temperature");
+            const selectedUnit = document.getElementById("unit").value;
+            const temperatureValue = parseFloat(temperatureInput.value);
+
+            // Check if the input is a valid number
+            if (isNaN(temperatureValue)) {
+                document.getElementById("result-box").innerHTML = "Please enter a valid number.";
+                return;
+            }
+
+            // Perform the temperature conversion
+            let result;
+            if (selectedUnit === "celsius") {
+                result = `${temperatureValue} &deg;C is equal to ${convertCelsiusToFahrenheit(temperatureValue)} &deg;F and ${convertCelsiusToKelvin(temperatureValue)} K`;
+            } else if (selectedUnit === "fahrenheit") {
+                result = `${temperatureValue} &deg;F is equal to ${convertFahrenheitToCelsius(temperatureValue)} &deg;C and ${convertFahrenheitToKelvin(temperatureValue)} K`;
+            } else if (selectedUnit === "kelvin") {
+                result = `${temperatureValue} K is equal to ${convertKelvinToCelsius(temperatureValue)} &deg;C and ${convertKelvinToFahrenheit(temperatureValue)} &deg;F`;
+            }
+
+            // Display the result inside the result-box div
+            document.getElementById("result-box").innerHTML = result;
+        }
+
+        // Temperature conversion functions
+        function convertCelsiusToFahrenheit(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        function convertCelsiusToKelvin(celsius) {
+            return celsius + 273.15;
+        }
+
+        function convertFahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5/9;
+        }
+
+        function convertFahrenheitToKelvin(fahrenheit) {
+            return (fahrenheit - 32) * 5/9 + 273.15;
+        }
+
+        function convertKelvinToCelsius(kelvin) {
+            return kelvin - 273.15;
+        }
+
+        function convertKelvinToFahrenheit(kelvin) {
+            return (kelvin - 273.15) * 9/5 + 32;
+        }
+    </script>
+</body>
+</html>
